@@ -17,10 +17,15 @@
   },
   "homepage": "https://github.com/DevMountain/sql-assessment#readme",
   "dependencies": {
+    "ava": "^0.15.2",
     "body-parser": "^1.17.2",
     "cors": "^2.8.3",
     "express": "^4.15.3",
-    "massive": "^2.6.1"
+    "faker": "^3.1.0",
+    "lodash": "^4.17.4",
+    "massive": "^2.6.1",
+    "supertest": "^2.0.1",
+    "supertest-as-promised": "^3.2.0"
   },
   "devDependencies": {
     "ava": "^0.15.2",
