@@ -13,7 +13,7 @@ app.use(cors());
 //The test doesn't like the Sync version of connecting,
 //  Here is a skeleton of the Async, in the callback is also
 //  a good place to call your database seeds.
-var db = massive.connect({connectionString : connString},
+var massiveInstance = massive.connectSync({connectionString : connString},
   function(err, localdb){
     db = localdb;
     // app.set('db', db);
@@ -25,6 +25,32 @@ var db = massive.connect({connectionString : connString},
     //   console.log("Vehicle Table Init")
     // });
 })
+
+app.set('db', massiveInstance);
+var db = app.get('db');
+
+
+const mainCtrl = require('./mainCtrl.js');
+
+app.get('/api/users', mainCtrl.getAllUsers);
+app.get('/api/vehicles', mainCtrl.getAllVehicles);
+app.get('/api/user/:userId/vehiclecount', mainCtrl.countVehiclesByUser);
+app.get('/api/user/:userId/vehicle', mainCtrl.listVehiclesByOwner);
+app.get('/api/vehicle?UserEmail=email', mainCtrl.getVehiclesByEmail);
+app.get('/api/vehicle?userFirstStart=letters', mainCtrl.getVehiclesByFirstLettersOfFirstname);
+app.get('/api/newervehiclesbyyear', mainCtrl.getVehiclesByYear);
+
+
+app.post('/api/users', mainCtrl.createUser);
+app.post('/api/vehicles', mainCtrl.createVehicle);
+
+app.put('/api/vehicle/:vehicleId/user/:userId', mainCtrl.updateOwner);
+
+app.delete('/api/user/:userId/vehicle/:vehicleId', mainCtrl.removeOwnershipOfVehicle);
+app.delete('/api/vehicle/:vehicleId', mainCtrl.deleteVehicle);
+
+
+
 
 app.listen('3000', function(){
   console.log("Successfully listening on : 3000")
