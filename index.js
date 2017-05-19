@@ -35,7 +35,7 @@ var massiveInstance = massive.connect({connectionString : connString},
         let id = req.params.userId;
 
         db.countVehiclesByUser([id], function(err, results){
-            return res.status(200).send(results);
+            return res.status(200).send(results[0]);
         })
     });
     app.get('/api/user/:userId/vehicle', function(req, res, next){
@@ -72,11 +72,16 @@ var massiveInstance = massive.connect({connectionString : connString},
         })
     });
     app.post('/api/vehicles', function(req, res, next){
-      let newCar = req.body;
-      db.createVehicle([newCar.make, newCar.model, newCar.year, newCar.ownerid], function(err, results){
+      let make = req.body.make;
+      let model = req.body.model;
+      let year = Number(req.body.year);
+      let ownerid = Number(req.body.ownerid);
+
+      db.createVehicle([make, model, year, ownerid], function(err, results){
             return res.status(200).send(results);
         })
     });
+
 
     app.put('/api/vehicle/:vehicleId/user/:userId', function(req, res, next){
       let carid = req.params.vehicleId;
@@ -85,10 +90,11 @@ var massiveInstance = massive.connect({connectionString : connString},
             return res.status(200).send(results);
         })
     });
+    
 
     app.delete('/api/user/:userId/vehicle/:vehicleId', function(req, res, next){
       let carid = req.params.vehicleId;
-      db.removeOwnershipOfVehicle(function(err, results){
+      db.removeOwnershipOfVehicle([carid], function(err, results){
             return res.status(200).send(results);
         })
     });
