@@ -1,3 +1,3 @@
 
 delete from vehicles
-where id = 1
+where id = $1
