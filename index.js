@@ -3,7 +3,7 @@ var bodyParser = require('body-parser');
 var cors = require('cors');
 var massive = require('massive');
 //Need to enter username and password for your database
-var connString = "postgres://username:password@localhost/assessbox";
+var connString = "postgres://zhtbbfpfdilwgq:c5605d5ccdb1b8a1dfacd53c3b1df190b37769d11144da7b15e6a30f67ddcaba@ec2-54-227-237-223.compute-1.amazonaws.com:5432/d49jk4vt7vsbft?ssl=true";
 
 var app = express();
 
